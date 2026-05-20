@@ -149,26 +149,16 @@ img, video {
 .letter-spacing-widest { letter-spacing: 0.2em; }
 .letter-spacing-editorial { letter-spacing: 0.1em; }
 
-/* ===== 7. COLOR UTILITIES ===== */
-.bg-background { background-color: var(--bg-primary) !important; }
-.bg-surface { background-color: var(--bg-surface) !important; }
+/* ===== 7. COLOR UTILITIES — kept (no Tailwind equivalent) ===== */
 .bg-surface-elevated { background-color: var(--bg-surface-elevated) !important; }
-.bg-surface-container { background-color: var(--bg-surface-container) !important; }
-.bg-surface-container-low { background-color: var(--bg-surface-container-low) !important; }
-.bg-surface-container-lowest { background-color: var(--bg-surface-container-lowest) !important; }
-.bg-surface-high { background-color: var(--bg-surface-high) !important; }
 .bg-surface-highest { background-color: var(--bg-surface-highest) !important; }
 
-.text-on-surface { color: var(--text-primary) !important; }
 .text-on-surface-variant { color: var(--text-secondary) !important; }
-.text-outline { color: var(--text-muted) !important; }
-.text-primary { color: var(--accent-gold) !important; }
 .text-hero-primary { color: #e8e1da !important; }
 .text-hero-secondary { color: #d0c5b5 !important; }
 .text-hero-muted { color: #e3c484 !important; }
 
 .border-surface-variant { border-color: var(--border-default) !important; }
-.border-outline-variant { border-color: var(--border-subtle) !important; }
 
 /* On-primary (button text) — ALWAYS BLACK */
 .text-on-primary,
@@ -1008,26 +998,8 @@ a:focus-visible {
 .light .border-\[\#4d463a\] {
   border-color: #d4d1cc !important;
 }
-.light .bg-surface-container {
-  background-color: #ffffff !important;
-}
-.light .bg-surface-container-low {
-  background-color: #f5f4f1 !important;
-}
-.light .bg-surface-container-lowest {
-  background-color: #efede8 !important;
-}
-.light .text-on-surface {
-  color: #1a1917 !important;
-}
 .light .text-on-surface-variant {
   color: #3d3a35 !important;
-}
-.light .text-outline {
-  color: #6b6660 !important;
-}
-.light .text-primary {
-  color: #b8964a !important;
 }
 .light .filter-btn {
   background-color: transparent !important;
