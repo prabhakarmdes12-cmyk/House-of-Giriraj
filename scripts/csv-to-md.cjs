@@ -65,14 +65,13 @@ const rows = parseCSV(fs.readFileSync(CSV_PATH, "utf-8"));
 
 let converted = 0;
 for (const row of rows) {
-  const categoryDir = path.join(PRODUCTS_DIR, row.category);
-  if (!fs.existsSync(categoryDir)) {
-    fs.mkdirSync(categoryDir, { recursive: true });
+  if (!fs.existsSync(PRODUCTS_DIR)) {
+    fs.mkdirSync(PRODUCTS_DIR, { recursive: true });
   }
-  const filePath = path.join(categoryDir, `${row.id}.md`);
+  const filePath = path.join(PRODUCTS_DIR, `${row.id}.md`);
   fs.writeFileSync(filePath, toYamlFrontmatter(row), "utf-8");
   converted++;
-  console.log(`  ✓ ${row.category}/${row.id}.md`);
+  console.log(`  ✓ ${row.id}.md`);
 }
 
 console.log(`\nConverted ${converted} products to markdown files in products/`);

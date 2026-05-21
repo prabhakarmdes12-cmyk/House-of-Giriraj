@@ -32,6 +32,7 @@ export default defineConfig({
         bespoke: resolve(__dirname, "bespoke.html"),
         heritage: resolve(__dirname, "heritage.html"),
         contact: resolve(__dirname, "contact.html"),
+        admin: resolve(__dirname, "admin", "index.html"),
       }
     }
   }
