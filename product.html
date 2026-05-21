@@ -308,21 +308,21 @@
       `;
 
       // Gallery thumb click handler
-      const thumbs = document.getElementById("gallery-thumbs");
-      const main = document.getElementById("gallery-main");
-      if (thumbs && main) {
-        thumbs.addEventListener("click", (e) => {
+      const galleryThumbs = document.getElementById("gallery-thumbs");
+      const galleryMain = document.getElementById("gallery-main");
+      if (galleryThumbs && galleryMain) {
+        galleryThumbs.addEventListener("click", (e) => {
           const btn = e.target.closest(".gallery-thumb");
           if (!btn) return;
-          thumbs.querySelectorAll(".gallery-thumb").forEach(t => t.classList.remove("border-primary"));
+          galleryThumbs.querySelectorAll(".gallery-thumb").forEach(t => t.classList.remove("border-primary"));
           btn.classList.add("border-primary");
           const type = btn.dataset.type;
           const src = btn.dataset.src;
           if (type === "image") {
-            main.innerHTML = `<img src="${src}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy" />`;
+            galleryMain.innerHTML = `<img src="${src}" alt="${product.name}" class="w-full h-full object-cover" loading="lazy" />`;
           } else if (type === "video") {
             const poster = btn.dataset.poster || "";
-            main.innerHTML = `<video controls autoplay class="w-full h-full object-cover" poster="${poster}"><source src="${src}" type="video/mp4"></video>`;
+            galleryMain.innerHTML = `<video controls autoplay class="w-full h-full object-cover" poster="${poster}"><source src="${src}" type="video/mp4"></video>`;
           }
         });
       }
