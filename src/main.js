@@ -498,7 +498,16 @@ function initHouseSlideshow() {
   const slideshows = document.querySelectorAll("[data-slideshow]");
   if (!slideshows.length) return;
 
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) { if (el._startAuto) el._startAuto(); }
+      else { if (el._stopAuto) el._stopAuto(); }
+    });
+  }, { threshold: 0.5 });
+
   slideshows.forEach((container) => {
+    observer.observe(container);
     const slides = container.querySelectorAll("[data-slide]");
     if (!slides.length) return;
 
@@ -528,6 +537,9 @@ function initHouseSlideshow() {
       clearInterval(interval);
     }
 
+    container._startAuto = startAuto;
+    container._stopAuto = stopAuto;
+
     if (prev) {
       prev.addEventListener("click", (e) => { e.stopPropagation(); stopAuto(); goTo(current - 1); startAuto(); });
     }
@@ -547,8 +559,6 @@ function initHouseSlideshow() {
       card.addEventListener("mouseenter", stopAuto);
       card.addEventListener("mouseleave", startAuto);
     }
-
-    startAuto();
   });
 }
 

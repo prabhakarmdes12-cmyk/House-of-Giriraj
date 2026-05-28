@@ -1244,14 +1244,16 @@ button {
 .house-card {
   background: #fff;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
-  transition: box-shadow 0.6s var(--ease-luxury);
+  border: 1px solid var(--border-subtle);
+  transition: box-shadow 0.6s var(--ease-luxury), border-color 0.5s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
 }
 
 .house-card-link:hover .house-card {
-  box-shadow: 0 12px 56px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 56px rgba(227, 196, 132, 0.2), 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-color: var(--accent-gold);
 }
 
 .house-card-image {
@@ -1310,6 +1312,11 @@ button {
   font-weight: 400;
   color: #1a1a1a;
   line-height: 1.25;
+  transition: color 0.3s ease;
+}
+
+.house-card-link:hover .house-piece-title {
+  color: var(--accent-gold);
 }
 
 .house-piece-desc {

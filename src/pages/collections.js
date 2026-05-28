@@ -19,6 +19,7 @@ const houseItems = houseCollection
       subcategory,
       images: p.images.map(f => base + encodeURIComponent(f)),
       shortDesc: p.ref,
+      description: p.description || "",
       type: "house"
     };
   });
@@ -34,6 +35,7 @@ const productItems = products.map(p => {
     subcategory: p.subcategory,
     images: imgs,
     shortDesc: p.shortDesc,
+    description: p.description || "",
     type: "product"
   };
 });
@@ -53,6 +55,60 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
   `).join("");
 
+  function cycleImage(card, dir) {
+    const imgs = card.querySelectorAll(".card-img");
+    if (imgs.length < 2) return;
+    const cur = card.querySelector(".card-img:not(.hidden)");
+    if (!cur) return;
+    let idx = parseInt(cur.dataset.index, 10);
+    if (dir === "prev") idx = idx > 0 ? idx - 1 : imgs.length - 1;
+    else idx = idx < imgs.length - 1 ? idx + 1 : 0;
+    imgs.forEach(img => img.classList.add("hidden"));
+    imgs[idx].classList.remove("hidden");
+  }
+
+  function isInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0;
+  }
+
+  function startAutoPlay(card) {
+    if (card.dataset.autoTimer) return;
+    card.dataset.autoTimer = setInterval(() => cycleImage(card, "next"), 4000);
+  }
+
+  function stopAutoPlay(card) {
+    if (card.dataset.autoTimer) {
+      clearInterval(parseInt(card.dataset.autoTimer));
+      delete card.dataset.autoTimer;
+    }
+  }
+
+  function resetAutoPlay(card) {
+    stopAutoPlay(card);
+    if (isInViewport(card)) startAutoPlay(card);
+  }
+
+  function connectAutoPlay() {
+    document.querySelectorAll(".product-card").forEach(card => {
+      const imgs = card.querySelectorAll(".card-img");
+      if (imgs.length < 2) return;
+      autoObserver.observe(card);
+      card.addEventListener("mouseenter", () => stopAutoPlay(card));
+      card.addEventListener("mouseleave", () => {
+        if (isInViewport(card)) startAutoPlay(card);
+      });
+    });
+  }
+
+  const autoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const card = entry.target;
+      if (entry.isIntersecting) startAutoPlay(card);
+      else stopAutoPlay(card);
+    });
+  }, { threshold: 0.5 });
+
   function render(filter = "all") {
     const filtered = filter === "all" ? allItems : allItems.filter(i => i.subcategory === filter);
     if (filtered.length === 0) {
@@ -66,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ? `house-piece.html?id=${encodeURIComponent(item.id)}`
         : `product.html?id=${encodeURIComponent(item.id)}`;
       const multi = item.images.length > 1;
+      const desc = item.description ? esc(item.description) : "";
       return `
         <a href="${href}" class="product-card group bg-surface-container block" data-type="${item.type}">
           <div class="aspect-[4/5] overflow-hidden relative">
@@ -83,40 +140,29 @@ document.addEventListener("DOMContentLoaded", function () {
             </button>
             ` : ""}
           </div>
-          <div class="p-5 text-center border-t border-surface-variant/30 group-hover:border-primary/30 transition-colors min-h-[120px] flex flex-col justify-center">
+          <div class="p-5 text-center border-t border-surface-variant/30 group-hover:border-primary/30 transition-colors min-h-[130px] flex flex-col justify-center">
             <span class="text-[9px] tracking-[0.3em] uppercase text-primary mb-2">${esc(item.subcategory)}</span>
             <h4 class="font-serif text-lg text-on-surface mb-1 group-hover:text-primary transition-colors">${esc(item.name)}</h4>
-            <p class="text-xs text-on-surface-variant leading-relaxed line-clamp-2">${esc(item.shortDesc)}</p>
-            <span class="mt-3 text-[10px] tracking-[0.2em] uppercase text-primary inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              View ${item.type === "house" ? "Collection" : "Masterpiece"}
-              <span class="material-symbols-outlined text-sm">arrow_forward</span>
-            </span>
+            <p class="text-xs text-on-surface-variant leading-relaxed line-clamp-2 mb-2">${esc(item.shortDesc)}</p>
+            ${desc ? `<p class="text-[11px] text-outline leading-relaxed line-clamp-2 border-t border-surface-variant/20 pt-2 mt-1">${desc}</p>` : ""}
           </div>
         </a>
       `;
     }).join("");
+    connectAutoPlay();
   }
 
   render("all");
-
-  function cycleImage(card, dir) {
-    const imgs = card.querySelectorAll(".card-img");
-    if (imgs.length < 2) return;
-    const cur = card.querySelector(".card-img:not(.hidden)");
-    if (!cur) return;
-    let idx = parseInt(cur.dataset.index, 10);
-    if (dir === "prev") idx = idx > 0 ? idx - 1 : imgs.length - 1;
-    else idx = idx < imgs.length - 1 ? idx + 1 : 0;
-    imgs.forEach(img => img.classList.add("hidden"));
-    imgs[idx].classList.remove("hidden");
-  }
 
   grid.addEventListener("click", function (e) {
     const btn = e.target.closest(".card-nav");
     if (!btn) return;
     e.preventDefault();
     e.stopPropagation();
-    cycleImage(btn.closest(".product-card"), btn.dataset.dir);
+    const card = btn.closest(".product-card");
+    if (!card) return;
+    cycleImage(card, btn.dataset.dir);
+    resetAutoPlay(card);
   });
 
   let touchCard = null, touchStartX = 0, touchStartY = 0, touchSwiped = false;
@@ -144,6 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (touchSwiped && Math.abs(dx) >= 50 && Math.abs(dx) > Math.abs(dy)) {
       e.preventDefault();
       cycleImage(touchCard, dx < 0 ? "next" : "prev");
+      resetAutoPlay(touchCard);
     }
     touchCard = null;
   }, { passive: false });
@@ -153,6 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!btn) return;
     filterContainer.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
+    autoObserver.disconnect();
     render(btn.dataset.filter);
   });
 
