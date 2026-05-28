@@ -221,7 +221,7 @@
               <textarea id="message" name="message" rows="3" placeholder="Tell us about your requirements or the piece you're looking for..." class="w-full bg-surface-container border border-surface-variant px-4 py-3 text-on-surface text-sm transition-colors duration-400 resize-none"></textarea>
             </div>
             <div class="pt-4">
-              <button type="submit" class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-label text-sm tracking-[0.2em] uppercase hover:translate-y-[-2px] transition-all duration-400 btn-fade">Book Appointment</button>
+              <button type="submit" class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-label text-sm tracking-[0.2em] uppercase hover:translate-y-[-2px] transition-all duration-400 btn-fade">Request a Private Viewing</button>
             </div>
           </form>
         </div>
@@ -318,6 +318,11 @@
           successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
         });
       }
+
+      const searchSystem = {
+        openSearchModal: function () { window.location.href = "collections.html"; },
+        closeSearchModal: function () {}
+      };
 
       WhatsAppFunnel.init();
     });

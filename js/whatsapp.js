@@ -92,8 +92,8 @@ const WhatsAppFunnel = {
               <span class="material-symbols-outlined">diamond</span>
             </span>
             <div class="wa-intent-text">
-              <span class="wa-label">Buy Now</span>
-              <span class="wa-desc">Browse available pieces</span>
+              <span class="wa-label">Purchase Inquiry</span>
+              <span class="wa-desc">Inquire about pricing and availability</span>
             </div>
           </button>
           <button data-intent="custom" class="wa-intent-btn">

@@ -89,7 +89,7 @@ function initHousePiece() {
         <div class="flex items-center gap-2 text-xs tracking-widest text-outline">
           <a href="index.html" class="hover:text-primary">HOME</a>
           <span>/</span>
-          <a href="signature-collection.html" class="hover:text-primary">THE HOUSE COLLECTION</a>
+          <a href="collections.html" class="hover:text-primary">THE HOUSE COLLECTION</a>
           <span>/</span>
           <span class="text-on-surface">${esc(piece.title).toUpperCase()}</span>
         </div>
@@ -244,7 +244,7 @@ function initHousePiece() {
       <div class="max-w-2xl mx-auto">
         <h3 class="font-serif text-3xl md:text-4xl text-hero-primary mb-4">Begin Your Private Acquisition</h3>
         <p class="text-hero-secondary mb-8">Consult with our senior diamond specialists for a confidential viewing.</p>
-        <a href="bespoke.html" class="inline-block px-10 md:px-12 py-3 md:py-4 bg-primary text-on-primary font-label text-sm tracking-[0.2em] uppercase hover:translate-y-[-4px] transition-all duration-500">Speak to a Diamond Expert</a>
+        <a href="bespoke.html" class="inline-block px-10 md:px-12 py-3 md:py-4 bg-primary text-on-primary font-label text-sm tracking-[0.2em] uppercase hover:translate-y-[-4px] transition-all duration-500">Request a Private Viewing</a>
       </div>
     </section>
   `;
