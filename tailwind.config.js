@@ -34,9 +34,9 @@ export default {
         line: "var(--border-subtle)"
       },
       fontFamily: {
-        serif: ["Noto Serif", "Georgia", "serif"],
+        serif: ["Cormorant Garamond", "Georgia", "serif"],
         sans: ["Manrope", "Inter", "system-ui", "sans-serif"],
-        headline: ["Noto Serif", "Georgia", "serif"],
+        headline: ["Cormorant Garamond", "Georgia", "serif"],
         body: ["Manrope", "Inter", "system-ui", "sans-serif"],
         label: ["Manrope", "Inter", "system-ui", "sans-serif"]
       },

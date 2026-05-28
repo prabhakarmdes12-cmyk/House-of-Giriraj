@@ -26,7 +26,7 @@
   --shadow-gold: rgba(227, 196, 132, 0.18);
   --nav-bg: rgba(5, 4, 3, 0.76);
   --nav-border: rgba(227, 196, 132, 0.12);
-  --font-display: "Noto Serif", Georgia, serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Manrope", system-ui, sans-serif;
   --space-page: clamp(1.25rem, 4vw, 5rem);
   --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
