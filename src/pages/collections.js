@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const multi = item.images.length > 1;
       const desc = item.description ? esc(item.description) : "";
       return `
-        <a href="${href}" class="product-card group bg-surface-container block" data-type="${item.type}">
+        <a href="${href}" class="product-card group bg-white block" data-type="${item.type}">
           <div class="aspect-[4/5] overflow-hidden relative">
             <div class="card-images w-full h-full">
               ${item.images.map((img, i) => `
@@ -140,11 +140,11 @@ document.addEventListener("DOMContentLoaded", function () {
             </button>
             ` : ""}
           </div>
-          <div class="p-5 text-center border-t border-surface-variant/30 group-hover:border-primary/30 transition-colors min-h-[130px] flex flex-col justify-center">
-            <span class="text-[9px] tracking-[0.3em] uppercase text-primary mb-2">${esc(item.subcategory)}</span>
-            <h4 class="font-serif text-lg text-on-surface mb-1 group-hover:text-primary transition-colors">${esc(item.name)}</h4>
-            <p class="text-xs text-on-surface-variant leading-relaxed line-clamp-2 mb-2">${esc(item.shortDesc)}</p>
-            ${desc ? `<p class="text-[11px] text-outline leading-relaxed line-clamp-2 border-t border-surface-variant/20 pt-2 mt-1">${desc}</p>` : ""}
+          <div class="p-6 text-left flex flex-col min-h-[130px] border-t border-surface-variant/30">
+            <span class="text-[10px] tracking-[0.12em] uppercase text-stone-400 mb-1">${esc(item.subcategory)}</span>
+            <h4 class="font-serif text-lg text-stone-800 leading-snug mb-1 group-hover:text-primary transition-colors">${esc(item.name)}</h4>
+            ${desc ? `<p class="text-[11px] text-stone-400 leading-relaxed line-clamp-2 mb-2">${desc}</p>` : ""}
+            <p class="text-[11px] tracking-widest uppercase text-stone-400 mt-auto">${esc(item.shortDesc)}</p>
           </div>
         </a>
       `;

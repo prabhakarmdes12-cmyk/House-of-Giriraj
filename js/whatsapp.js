@@ -210,7 +210,18 @@ const WhatsAppFunnel = {
     let message = "";
 
     if (this.sourcePage === "product" && this.productName) {
-      message = `Hello, I'm ${name}.\n\nI'm interested in the "${this.productName}" piece I saw on your website.\n\nCould you please share pricing, availability, and any available certification details?\n\nThank you.`;
+      const pd = window.__waProductData;
+      if (pd && pd.description) {
+        message = `Hello, I'm ${name}.\n\nI'm interested in "${this.productName}" — ${pd.description}\n\n`;
+        if (pd.specs) {
+          const s = pd.specs;
+          message += `Details: ${s.stone || ""}, ${s.metal || ""}, ${s.weight || ""}${s.cert ? ", " + s.cert : ""}\n`;
+        }
+        if (pd.category) message += `Category: ${pd.category}\n`;
+        message += `Reference: ${pd.name}\n\nCould you please share pricing and availability?\n\nThank you.`;
+      } else {
+        message = `Hello, I'm ${name}.\n\nI'm interested in the "${this.productName}" piece I saw on your website.\n\nCould you please share pricing, availability, and any available certification details?\n\nThank you.`;
+      }
     } else if (this.sourcePage === "collections" && this.category) {
       message = `Hello, I'm ${name}.\n\nI was browsing your ${this.category} collection and would love to see what's available.\n\nCould you share options along with pricing?\n\nThank you.`;
     } else {

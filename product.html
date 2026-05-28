@@ -264,9 +264,9 @@
                   <a href="bespoke.html" class="px-10 md:px-12 py-3 md:py-4 bg-primary text-on-primary font-label text-sm tracking-[0.2em] uppercase hover:translate-y-[-4px] transition-all duration-500 text-center">
                     Request Private Viewing
                   </a>
-                  <a href="https://wa.me/919885055550" target="_blank" class="px-10 md:px-12 py-3 md:py-4 border border-primary text-primary font-label text-sm tracking-[0.2em] uppercase hover:bg-primary hover:text-on-primary transition-all duration-500 text-center">
+                  <button type="button" data-wa-btn class="px-10 md:px-12 py-3 md:py-4 border border-primary text-primary font-label text-sm tracking-[0.2em] uppercase hover:bg-primary hover:text-on-primary transition-all duration-500 text-center">
                     WhatsApp Consultation
-                  </a>
+                  </button>
                 </div>
 
                 <!-- Trust -->
@@ -383,6 +383,14 @@
           }
         }, { passive: false });
       }
+
+      // Pass product details to WhatsApp funnel
+      window.__waProductData = {
+        name: product.name,
+        description: product.description,
+        category: product.category,
+        specs: product.specs
+      };
 
       // Re-init WhatsApp funnel after DOM injection
       WhatsAppFunnel.init();
