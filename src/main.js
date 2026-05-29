@@ -313,7 +313,6 @@ function initMotion() {
 
 function initVideoFallbacks() {
   const shouldUseStaticHero =
-    window.matchMedia("(max-width: 760px)").matches ||
     window.matchMedia("(prefers-reduced-data: reduce)").matches ||
     reducedMotion;
 
