@@ -404,8 +404,16 @@ button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
+}
+
+.hero-actions {
+  justify-content: flex-start;
+}
+
+.footer-actions,
+.modal-actions {
+  justify-content: center;
 }
 
 .button {
