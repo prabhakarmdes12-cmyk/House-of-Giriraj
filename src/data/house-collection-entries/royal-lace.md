@@ -3,8 +3,8 @@ id: royal-lace
 title: Royal Lace
 ref: CH-12509
 category: High Jewellery · Diamond
-description: An ornate lattice of diamonds inspired by heirloom craftsmanship and ceremonial artistry.
-hero: Highly distinctive silhouette.
+description: 65 carats of precisely calibrated diamonds set in an intricate openwork lattice — a choker of regal proportions and heirloom artistry.
+hero: Diamond mastery at its most elaborate.
 images:
   - image: /assets/images/collection/royal-lace/royale-lace-ch-12509(1).png
   - image: /assets/images/collection/royal-lace/royale-lace-ch-12509(2).png

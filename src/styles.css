@@ -322,7 +322,7 @@ button {
   position: relative;
   min-height: 100svh;
   display: grid;
-  place-items: center;
+  place-items: end center;
   overflow: hidden;
   isolation: isolate;
   background: #000;
@@ -357,7 +357,7 @@ button {
 .hero-copy {
   width: min(100% - clamp(1.5rem, 4vw, 4.5rem), 1760px);
   margin-inline: auto;
-  padding: 7rem 0 5rem;
+  padding: 0 0 2.5rem;
   text-align: left;
 }
 
@@ -373,7 +373,7 @@ button {
 }
 
 .hero-title {
-  font-size: clamp(3.6rem, 9vw, 10.5rem);
+  font-size: clamp(2.8rem, 6.5vw, 7.5rem);
   max-width: 12ch;
   margin: 0 0 1.5rem;
 }
