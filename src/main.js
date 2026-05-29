@@ -460,10 +460,11 @@ function createHouseCard(piece, isHomepage) {
 
   const desc = document.createElement("p");
   desc.className = "house-piece-desc";
-  desc.textContent = piece.description;
+  const displayDesc = isHomepage ? piece.description.split("\n\n")[0] : piece.description;
+  desc.textContent = displayDesc;
   caption.appendChild(desc);
 
-  if (piece.ref) {
+  if (piece.ref && !isHomepage) {
     const ref = document.createElement("span");
     ref.className = "house-ref";
     ref.textContent = piece.ref;
