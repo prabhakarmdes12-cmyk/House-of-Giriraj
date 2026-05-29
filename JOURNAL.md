@@ -308,3 +308,50 @@
 - **Styling**: `letter-spacing: 0.04em` for elongated appearance, white text at 0.88 opacity, inline-block display so the background wraps only the text content.
 - **Intermediate font tried**: Alex Brush (too uniformly thick for the "thin and long" request), Italianno selected as thinner naturally.
 - **Google Fonts**: Added `Italianno` to the `index.html` font import.
+
+### Hero Title Font-Size Reduction
+
+- **Reduced desktop font-size**: `clamp(3.6rem, 9vw, 10.5rem)` → `clamp(2.8rem, 6.5vw, 7.5rem)`.
+- **Pushed text to bottom**: `.hero` from `place-items: center` → `place-items: end center`;
+  `.hero-copy` padding `7rem 0 5rem` → `0 0 2.5rem`.
+- **Merged headline**: Two `.split-line` spans combined into one —
+  "Where Value Takes Form." single line.
+
+### Mobile Button Overlap Fix
+
+- Hero button on mobile overlapped with WhatsApp FAB due to full-width sizing.
+- **Fix**: `.hero-actions .button` on ≤640px: `min-height: 2.5rem; padding: 0.5rem 1.25rem;
+  width: auto; align-self: flex-start`.
+
+### Hero Title Mobile 3-Line Break Fix
+
+- At smaller widths the title wrapped to 3 lines.
+- **Fix**: Mobile font-size reduced from `clamp(3.15rem, 16vw, 4.9rem)` →
+  `clamp(2.4rem, 12vw, 3.8rem)`; `max-width: none` on mobile override.
+
+### Desktop Hero Title Max-Width Removal
+
+- `max-width: 12ch` removed from `.hero-title` so desktop displays on one line
+  without forced wrapping.
+
+### Video Playback Fallback
+
+- Non-Chrome mobile browsers (Firefox, Samsung Internet) failed to play H.264
+  videos due to `moov` atom at end of file (requires full download before playback).
+- **JS poster fallback**: `initVideoFallbacks()` in `src/main.js` catches `play()`
+  promise rejection and swaps `<video>` to `<img>` with the poster image.
+- Also adds a `stalled` event listener as additional trigger.
+
+### FFmpeg Faststart — All Videos Optimized
+
+- `ffmpeg` installed via `winget install Gyan.FFmpeg` (found at
+  `%LOCALAPPDATA%\Microsoft\WinGet\Packages\...\ffmpeg.exe`).
+- All 6 site videos processed with `-movflags +faststart -codec copy`:
+  - `collections-hero.mp4` (20.5s, 17.7 Mb/s) — hero background
+  - `stone-dictates-form.mp4` (6s, 17.1 Mb/s) — editorial section
+  - `atelier.mp4` (9.6s, 17.6 Mb/s) — atelier section
+  - `Maharani_Cascade-film.mp4` (10s, 17.6 Mb/s) — hero product trailer
+  - `hero2.mp4` — already had faststart (secondary hero)
+  - `curation.mp4` — already had faststart (curation section)
+- **Result**: All 6 verified moov-at-start via binary scan. Firefox, Safari, and
+  Samsung Internet can now stream without full download.

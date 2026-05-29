@@ -159,10 +159,21 @@ The hero and atelier videos have intentionally been restored:
 - `public/assets/videos/hero2.mp4` is about 61 MB.
 - `public/assets/videos/atelier.mp4` is about 21 MB.
 
-This returns the full luxury motion direction but makes the production bundle
-much larger. The homepage still includes optimized image fallbacks and removes
-the hero video on mobile, reduced-data, or reduced-motion environments through
-`src/main.js`.
+### Video Optimization (Faststart)
+
+All 6 site videos have been processed with `ffmpeg -movflags +faststart -codec copy`
+to move the `moov` (index) atom to the beginning of the file. This allows Firefox,
+Safari, and Samsung Internet to stream playback without downloading the entire file first.
+
+- `collections-hero.mp4` — hero background (20.5s, 17.7 Mb/s)
+- `stone-dictates-form.mp4` — editorial section (6s, 17.1 Mb/s)
+- `atelier.mp4` — atelier section (9.6s, 17.6 Mb/s)
+- `Maharani_Cascade-film.mp4` — hero product trailer (10s, 17.6 Mb/s)
+- `hero2.mp4` — already had faststart
+- `curation.mp4` — already had faststart
+
+As a safety net, `initVideoFallbacks()` in `src/main.js` catches `play()` promise
+rejection on unsupported browsers and swaps to the poster image.
 
 ## Build Behavior
 
@@ -191,9 +202,12 @@ stone types) into house collection entries.
 
 ## Hero Styling
 
-- `.hero` uses `place-items: end center` — text sits at the bottom of the viewport.
-- Title font: `clamp(2.8rem, 6.5vw, 7.5rem)`.
-- Subtitle font: Italianno cursive with translucent background.
+- `.hero` uses `place-items: end center` — text sits at the bottom of the viewport (padding `0 0 2.5rem`).
+- Title font: desktop `clamp(2.8rem, 6.5vw, 7.5rem)`, mobile `clamp(2.4rem, 12vw, 3.8rem)`.
+- Title is a single line: "Where Value Takes Form." (merged from two `.split-line` spans).
+- `max-width: 12ch` removed for desktop one-line display; mobile override sets `max-width: none`.
+- Subtitle font: Italianno cursive with translucent `rgba(0,0,0,0.35)` background + `backdrop-filter: blur(2px)`.
+- Hero button on mobile: `min-height: 2.5rem; padding: 0.5rem 1.25rem; width: auto; align-self: flex-start` (prevents overlap with WhatsApp FAB).
 
 ## Verification Performed
 
@@ -205,8 +219,8 @@ stone types) into house collection entries.
 
 ## Known Follow-Ups
 
-- Compress `hero2.mp4` and `atelier.mp4` with FFmpeg or a video tool before final
-  deployment if mobile performance becomes a priority.
+- Compress `hero2.mp4` (~61 MB) and `atelier.mp4` (~21 MB) with FFmpeg CRF encoding
+  before final deployment if mobile performance becomes a priority (faststart is already done).
 - Run a browser-based QA pass on desktop and mobile once Chrome, Edge, or
   Playwright is available.
 - Run Lighthouse after video compression and deployment.
