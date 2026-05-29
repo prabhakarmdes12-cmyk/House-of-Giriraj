@@ -22,7 +22,8 @@ existing multi-page production funnel.
 ```bash
 npm run dev               # Vite dev server (localhost:5173)
 npm run dev:sync          # Watches products/*.md → regenerates src/data.js
-npm run build
+npm run sync:house        # Reads house-collection-entries/*.md → regenerates src/data/house-collection.js
+npm run build             # sync:house + vite build
 npm run preview
 npm run optimize:images   # Generate responsive AVIF/WebP variants
 ```
@@ -175,6 +176,24 @@ the hero video on mobile, reduced-data, or reduced-motion environments through
 Vite warns that non-module scripts are not bundled. That is expected for the
 legacy pages; the files are copied as static assets and continue to load by
 their existing paths.
+
+## Image Structure
+
+- **House collection** (15 editorial pieces): `public/assets/images/collection/{id}/` — 9 with images, 6 empty.
+- **Products** (21 commercial items): `public/assets/images/products/{category}/{product-id}/hero.jpg`
+  (category-nested convention; 3 pre-populated, 18 awaiting user images).
+
+## Inventory Reference
+
+`product details/master-inventory.xlsx` consolidates 119 items from 5 supplier
+sheets with tag-to-product mapping. Used to populate real specs (carat weights,
+stone types) into house collection entries.
+
+## Hero Styling
+
+- `.hero` uses `place-items: end center` — text sits at the bottom of the viewport.
+- Title font: `clamp(2.8rem, 6.5vw, 7.5rem)`.
+- Subtitle font: Italianno cursive with translucent background.
 
 ## Verification Performed
 

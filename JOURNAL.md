@@ -225,6 +225,40 @@
   JS — renamed to `galleryMain`.
 - CSV re-import overwrites CMS data — only use `csv-to-md.cjs` for initial bulk import.
 
+### Product Image Folders — Category-Nested Structure
+
+- **Created** 21 product image folders at `public/assets/images/products/{category}/{product-id}/`
+  (7 categories × 3 products each).
+- **Restructured** 3 existing image sets into the nested convention:
+  - `ekta-lineage/` → `bracelets/ekta-lineage/`
+  - `maharani-viraasat/` → `necklaces/maharani-viraasat/`
+  - `raj-tilak/` → `necklaces/raj-tilak-emerald/` (also renamed to match product ID)
+- **Added** `image: "{category}/{product-id}/hero.jpg"` field to all 21 product `.md` frontmatter files.
+- **Regenerated** `src/data.js` via `sync-products.cjs` — all 21 products now have populated image paths.
+- **Git note**: git auto-detected the moves as renames (100% similarity), preserving history.
+
+### Master Inventory Excel
+
+- Created `product details/master-inventory.xlsx` with 3 sheets:
+  - **Sheet 1 — All Inventory**: 119 consolidated items from 5 supplier XLS files with Status/Mapped Product columns.
+  - **Sheet 2 — Product Mapping**: 9 website products mapped to inventory tags, showing found/missing status and specs.
+  - **Sheet 3 — Missing Tags**: 5 unmatched tags needing sourcing (12725, 12325, 12536, 12316, 12294).
+- Extracted real specs for 3 matched pieces from inventory (dynasty-bloom/12695, royal-lace/12509, ruby-aurora/12479).
+
+### House Collection Copy — Inventory-Populated Descriptions
+
+- **Dynasty Bloom**: Updated category to "Emerald, Pearl & Diamond"; description now reads *"33 carats of brilliant diamonds, 44 carats of vivid emeralds, and 26 carats of lustrous pearls converge in an opulent floral garland..."*
+- **Royal Lace**: Description now reads *"65 carats of precisely calibrated diamonds set in an intricate openwork lattice..."*
+- **Ruby Aurora**: Description now reads *"49 carats of diamonds frame 79 carats of vivid rubies in a composition of ceremonial grandeur..."*
+- **Regenerated** `src/data/house-collection.js` via `npm run sync:house`.
+
+### Hero Visual Refinement
+
+- **Reduced title font-size**: `clamp(3.6rem, 9vw, 10.5rem)` → `clamp(2.8rem, 6.5vw, 7.5rem)` (~28% smaller max).
+- **Pushed text to bottom**: Changed `.hero` from `place-items: center` → `place-items: end center`;
+  `.hero-copy` padding reduced from `7rem 0 5rem` → `0 0 2.5rem`.
+- **Merged headline**: "Where Value / Takes Form." → single-line "Where Value Takes Form." (merged two `.split-line` spans).
+
 ## 2026-05-29
 
 ### CTA Label Consolidation Fixes
