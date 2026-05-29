@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <span class="text-[10px] tracking-[0.12em] uppercase text-stone-400 mb-1">${esc(item.subcategory)}</span>
             <h4 class="font-serif text-lg text-stone-800 leading-snug mb-1 group-hover:text-primary transition-colors">${esc(item.name)}</h4>
             ${desc ? `<p class="text-[11px] text-stone-400 leading-relaxed line-clamp-2 mb-2">${desc}</p>` : ""}
-            <p class="text-[11px] tracking-widest uppercase text-stone-400 mt-auto">${esc(item.shortDesc)}</p>
+            <p class="text-[11px] tracking-widest uppercase text-stone-400 mt-auto">${esc(item.shortDesc || "")}</p>
           </div>
         </a>
       `;

@@ -357,14 +357,13 @@ function createHouseCard(piece, isHomepage) {
   wrapper.className = "image-wrapper";
 
   const multi = piece.images && piece.images.length > 1;
+  let slideIdx = 0;
 
   if (multi) {
     imageArea.setAttribute("data-slideshow", "");
 
     const slideshow = document.createElement("div");
     slideshow.className = "house-slideshow";
-
-    let slideIdx = 0;
 
     if (piece.trailer) {
       const slide = document.createElement("div");
