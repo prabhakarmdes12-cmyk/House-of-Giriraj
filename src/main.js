@@ -717,6 +717,99 @@ function initNavHide() {
   }, { passive: true });
 }
 
+function initAmbientMusic() {
+  const audio = new Audio("/assets/website-music/Rondo_in_A_Minor.mp3");
+  audio.loop = true;
+  audio.volume = 0.25;
+
+  const btns = document.querySelectorAll("[data-music-toggle]");
+  const icons = {
+    desktop: document.getElementById("music-icon"),
+    mobile: document.getElementById("music-icon-mobile"),
+  };
+
+  function setIcon(state) {
+    const iconName = state === "playing" ? "music_off" : "music_note";
+    if (icons.desktop) icons.desktop.textContent = iconName;
+    if (icons.mobile) icons.mobile.textContent = iconName;
+  }
+
+  function stop() {
+    audio.pause();
+    audio.currentTime = 0;
+    setIcon("stopped");
+    localStorage.setItem("musicEnabled", "false");
+    btns.forEach((b) => b.classList.remove("is-active"));
+  }
+
+  function play() {
+    audio.play().catch(() => {});
+    setIcon("playing");
+    localStorage.setItem("musicEnabled", "true");
+    btns.forEach((b) => b.classList.add("is-active"));
+  }
+
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (audio.paused) {
+        play();
+      } else {
+        stop();
+      }
+    });
+  });
+
+  if (localStorage.getItem("musicEnabled") === "true") {
+    audio.currentTime = 0;
+    play();
+  }
+
+  const tip = document.getElementById("music-tip");
+  const wrap = document.querySelector(".music-toggle-wrap");
+  if (!tip || !wrap) return;
+
+  let isHovering = false;
+  let autoTimer = null;
+
+  function showTip() {
+    tip.classList.add("is-visible");
+  }
+
+  function hideTip() {
+    tip.classList.remove("is-visible");
+  }
+
+  if (!localStorage.getItem("musicTipShown")) {
+    showTip();
+    autoTimer = setTimeout(() => {
+      if (!isHovering) hideTip();
+      localStorage.setItem("musicTipShown", "true");
+      autoTimer = null;
+    }, 2500);
+  }
+
+  wrap.addEventListener("mouseenter", () => {
+    isHovering = true;
+    showTip();
+  });
+
+  wrap.addEventListener("mouseleave", () => {
+    isHovering = false;
+    hideTip();
+  });
+
+  btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (autoTimer) {
+        clearTimeout(autoTimer);
+        autoTimer = null;
+      }
+      hideTip();
+      localStorage.setItem("musicTipShown", "true");
+    });
+  });
+}
+
 function init() {
   initTheme();
   initLanguageSelectors();
@@ -724,6 +817,7 @@ function init() {
   initSearch();
   initMotion();
   initVideoFallbacks();
+  initAmbientMusic();
   initNavHide();
   renderHouseCollection("#house-grid");
   initHouseSlideshow();

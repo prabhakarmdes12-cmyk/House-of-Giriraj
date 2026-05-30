@@ -314,6 +314,62 @@ button {
   transform: translateY(-1px);
 }
 
+.music-toggle.is-active {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.music-toggle-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.music-tip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.45rem 0.75rem;
+  background: #222;
+  color: #eee;
+  font-size: 0.6875rem;
+  font-family: Manrope, system-ui, sans-serif;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-luxury);
+  z-index: 85;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.music-tip-arrow {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #222;
+}
+
+.music-tip.is-visible {
+  opacity: 1;
+}
+
+.light .music-tip {
+  background: #fff;
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.light .music-tip-arrow {
+  border-bottom-color: #fff;
+}
+
 .menu-trigger {
   display: none;
 }
