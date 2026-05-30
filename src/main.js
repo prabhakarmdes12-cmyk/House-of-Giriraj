@@ -727,6 +727,9 @@ function initAmbientMusic() {
     desktop: document.getElementById("music-icon"),
     mobile: document.getElementById("music-icon-mobile"),
   };
+  const tip = document.getElementById("music-tip");
+  const wrap = document.querySelector(".music-toggle-wrap");
+  const tipLabel = document.querySelector(".music-tip-label");
 
   function setIcon(state) {
     const iconName = state === "playing" ? "music_off" : "music_note";
@@ -734,10 +737,27 @@ function initAmbientMusic() {
     if (icons.mobile) icons.mobile.textContent = iconName;
   }
 
+  function setTipText(state) {
+    if (!tipLabel) return;
+    tipLabel.textContent = state === "playing" ? "Turn off ambient music" : "Turn on ambient music";
+  }
+
+  function fadeVolume(from, to, duration, cb) {
+    const start = performance.now();
+    function step(now) {
+      const t = Math.min((now - start) / duration, 1);
+      audio.volume = from + (to - from) * t;
+      if (t < 1) requestAnimationFrame(step);
+      else if (cb) cb();
+    }
+    requestAnimationFrame(step);
+  }
+
   function stop() {
     audio.pause();
     audio.currentTime = 0;
     setIcon("stopped");
+    setTipText("stopped");
     localStorage.setItem("musicEnabled", "false");
     btns.forEach((b) => b.classList.remove("is-active"));
   }
@@ -745,13 +765,62 @@ function initAmbientMusic() {
   function play() {
     audio.play().catch(() => {});
     setIcon("playing");
+    setTipText("playing");
     localStorage.setItem("musicEnabled", "true");
     btns.forEach((b) => b.classList.add("is-active"));
+  }
+
+  function savePosition() {
+    if (!audio.paused) {
+      localStorage.setItem("musicPosition", audio.currentTime);
+    }
+  }
+
+  function resumeFromSaved() {
+    const savedTime = localStorage.getItem("musicPosition");
+    if (savedTime) audio.currentTime = parseFloat(savedTime);
+
+    const tryPlay = () => {
+      audio.volume = 0;
+      return audio.play();
+    };
+
+    tryPlay()
+      .then(() => fadeVolume(0, 0.25, 500))
+      .catch(() => {
+        audio.volume = 0.25;
+        const onGesture = () => {
+          tryPlay().then(() => fadeVolume(0, 0.25, 500)).catch(() => {});
+          document.removeEventListener("click", onGesture);
+          document.removeEventListener("touchstart", onGesture);
+          document.removeEventListener("keydown", onGesture);
+        };
+        document.addEventListener("click", onGesture);
+        document.addEventListener("touchstart", onGesture);
+        document.addEventListener("keydown", onGesture);
+      });
+  }
+
+  window.addEventListener("beforeunload", savePosition);
+  window.addEventListener("pagehide", savePosition);
+
+  if (localStorage.getItem("musicEnabled") === "true") {
+    setIcon("playing");
+    setTipText("playing");
+    btns.forEach((b) => b.classList.add("is-active"));
+    resumeFromSaved();
+  } else {
+    setIcon("stopped");
+    setTipText("stopped");
   }
 
   btns.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (audio.paused) {
+        const savedTime = localStorage.getItem("musicPosition");
+        if (savedTime && audio.currentTime === 0) {
+          audio.currentTime = parseFloat(savedTime);
+        }
         play();
       } else {
         stop();
@@ -759,13 +828,6 @@ function initAmbientMusic() {
     });
   });
 
-  if (localStorage.getItem("musicEnabled") === "true") {
-    audio.currentTime = 0;
-    play();
-  }
-
-  const tip = document.getElementById("music-tip");
-  const wrap = document.querySelector(".music-toggle-wrap");
   if (!tip || !wrap) return;
 
   let isHovering = false;

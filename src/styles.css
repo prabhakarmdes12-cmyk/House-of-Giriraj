@@ -411,6 +411,7 @@ button {
 }
 
 .hero-copy {
+  color: #f3eee7;
   width: min(100% - clamp(1.5rem, 4vw, 4.5rem), 1760px);
   margin-inline: auto;
   padding: 0 0 2.5rem;
@@ -830,6 +831,7 @@ button {
 }
 
 .cta-copy {
+  color: #f3eee7;
   position: relative;
   width: min(100% - 2rem, 56rem);
   padding: 4rem 1rem;
